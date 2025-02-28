@@ -77,3 +77,13 @@ export const ageRestrictionValidator = (
   }
   return;
 };
+
+export const canBeDownloadedValidator = (
+  canBeDownloaded: boolean,
+  errorsArray: Array<errorType>
+) => {
+  if (!(typeof canBeDownloaded === "boolean")) {
+    errorsArray.push({ message: "can be boolean", field: "canBeDownloaded" });
+  }
+  return;
+};

@@ -7,6 +7,7 @@ import {
   authorFieldValidator,
   availableResolutionsFieldValidator,
   titleFieldValidator,
+  canBeDownloadedValidator,
 } from "../validation/fieldValidation";
 
 export const videosRouter = Router();
@@ -62,12 +63,14 @@ const videosController = {
       availableResolutions,
       canBeDownloaded,
       minAgeRestriction,
+      publicationDate,
     } = req.body;
 
     titleFieldValidator(title, errorsArray);
     authorFieldValidator(author, errorsArray);
     availableResolutionsFieldValidator(availableResolutions, errorsArray);
     ageRestrictionValidator(minAgeRestriction, errorsArray);
+    canBeDownloadedValidator(canBeDownloaded, errorsArray);
 
     if (errorsArray.length > 0) {
       res.status(400).json(errorResponse(errorsArray));
@@ -83,6 +86,8 @@ const videosController = {
     video.title = title;
     video.author = author;
     video.availableResolutions = availableResolutions;
+    video.publicationDate = new Date(publicationDate).toISOString();
+    video.canBeDownloaded = canBeDownloaded;
 
     if (typeof canBeDownloaded === "boolean") {
       video.canBeDownloaded = canBeDownloaded;
