@@ -8,6 +8,7 @@ import {
   availableResolutionsFieldValidator,
   titleFieldValidator,
   canBeDownloadedValidator,
+  publicationDateValidator,
 } from "../validation/fieldValidation";
 
 export const videosRouter = Router();
@@ -71,6 +72,7 @@ const videosController = {
     availableResolutionsFieldValidator(availableResolutions, errorsArray);
     ageRestrictionValidator(minAgeRestriction, errorsArray);
     canBeDownloadedValidator(canBeDownloaded, errorsArray);
+    publicationDateValidator(publicationDate, errorsArray);
 
     if (errorsArray.length > 0) {
       res.status(400).json(errorResponse(errorsArray));

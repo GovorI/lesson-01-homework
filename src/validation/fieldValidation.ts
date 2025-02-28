@@ -87,3 +87,32 @@ export const canBeDownloadedValidator = (
   }
   return;
 };
+
+export const publicationDateValidator = (
+  date: string,
+  errorsArray: Array<errorType>
+) => {
+  if (typeof date !== "string") {
+    errorsArray.push({
+      message: "Publication date must be a string",
+      field: "publicationDate",
+    });
+    return;
+  }
+
+  if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(date)) {
+    errorsArray.push({
+      message: "Invalid ISO date format (expected: YYYY-MM-DDTHH:mm:ss.sssZ)",
+      field: "publicationDate",
+    });
+    return;
+  }
+
+  const timestamp = Date.parse(date);
+  if (isNaN(timestamp)) {
+    errorsArray.push({
+      message: "Invalid date value",
+      field: "publicationDate",
+    });
+  }
+};
